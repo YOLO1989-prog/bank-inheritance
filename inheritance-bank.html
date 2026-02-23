@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Neo Digital Bank</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .card {
+        background: white;
+        width: 340px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .login-btn {
+        background: #2a5298;
+        color: white;
+        width: 95%;
+    }
+
+    .deposit {
+        background: #28a745;
+        color: white;
+    }
+
+    .withdraw {
+        background: #dc3545;
+        color: white;
+    }
+
+    .logout {
+        background: #555;
+        color: white;
+        width: 95%;
+        margin-top: 10px;
+    }
+
+    .balance-box {
+        background: #f4f6f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    #dashboard {
+        display: none;
+    }
+
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+
+<div class="card" id="login">
+    <h2>Neo Digital Bank</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button class="login-btn" onclick="login()">Login</button>
+    <p class="error" id="error"></p>
+</div>
+
+<div class="card" id="dashboard">
+    <h2>Account Dashboard</h2>
+
+    <div class="balance-box">
+        <h3>Balance</h3>
+        <h1>$<span id="balance">5800000000</span></h1>
+    </div>
+
+    <input type="number" id="amount" placeholder="Enter Amount">
+
+    <button class="deposit" onclick="deposit()">Deposit</button>
+    <button class="withdraw" onclick="withdraw()">Withdraw</button>
+
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<script>
+let balance = 58000000;
+
+function login() {
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === "admin" && pass === "1234") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    } else {
+        document.getElementById("error").innerText = "Invalid login details!";
+    }
+}
+
+function deposit() {
+    let amount = parseFloat(document.getElementById("amount").value);
+    if(amount > 0) {
+        balance += amount;
+        document.getElementById("balance").innerText = balance.toFixed(2);
+        document.getElementById("amount").value = "";
+    }
+}
+
+function withdraw() {
+    let amount = parseFloat(document.getElementById("amount").value);
+    if(amount > 0 && amount <= balance) {
+        balance -= amount;
+        document.getElementById("balance").innerText = balance.toFixed(2);
+        document.getElementById("amount").value = "";
+    } else {
+        alert("Insufficient funds!");
+    }
+}
+
+function logout() {
+    document.getElementById("dashboard").style.display = "none";
+    document.getElementById("login").style.display = "block";
+}
+</script>
+
+</body>
+</html>
